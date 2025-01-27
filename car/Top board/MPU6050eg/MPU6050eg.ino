@@ -3,12 +3,11 @@
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
+const float Xoffset = 0.51;
+const float Yoffset = -0.16;
 float AccX;
 float AccY;
-float AccZ;
-float GyrX;
-float GyrY;
-float GyrZ;
+float turnangle;
 
 Adafruit_MPU6050 mpu;
 
@@ -19,14 +18,17 @@ void setup(void) {
 }
 
 void loop() {
+   updateMPU();
+}
 
-  /* Get new sensor events with the readings */
+void updateMPU(){
+ /* Get new sensor events with the readings */
   sensors_event_t a, g, temp;
   mpu.getEvent(&a, &g, &temp);
-  AccX = a.acceleration.x;
-  AccY = a.acceleration.y;
-  AccZ = a.acceleration.z;
-  GyrX = g.gyro.x;
-  GryY = g.gryo.y;
-  GryZ = g.gyro.z;
+  AccX = a.acceleration.x - Xoffset;
+  AccY = a.acceleration.y - Yoffset;
+  turnangle = atan2(AccY,AccX);
+  Serial.print(AccX);
+  Serial.println(AccY);
+  Serial.print(turrnangle);
 }

@@ -9,7 +9,6 @@ float xoffset = 0.52;
 float yoffset = -0.16;
 float accX;
 float accY;
-float turnangle;
 
 void setup(void) {
   Serial.begin(115200);
@@ -42,13 +41,10 @@ void loop() {
   /* Print out the values */
   accX = a.acceleration.x - xoffset;
   accY = a.acceleration.y - yoffset;
-  turnangle = atan2(accY,accX);
   Serial.print("Acceleration X: ");
   Serial.println(accX);
   Serial.print(", Y: ");
   Serial.println(accY);
-  Serial.print(", angle: ");
-  Serial.println(turnangle);
 
   delay(200);
 }
